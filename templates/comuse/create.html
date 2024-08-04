@@ -3,7 +3,7 @@
 {% block title %}楽曲を投稿{% endblock %}
 
 {% block content %}
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="blueback">投稿</button>

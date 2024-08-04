@@ -1,12 +1,25 @@
 from django.conf import settings
 from django.db import models
+from django.core.validators import FileExtensionValidator
+import os
+import datetime
+
+
+def up_dir_path(instance, filename):
+    date_time = datetime.datetime.now()
+    date_dir = date_time.strftime('%Y/%m/%d')  # 年/月/日
+    time_stamp = date_time.strftime('%H%M%S')  # 時分秒(ex: 120101)
+    new_filename = time_stamp + filename
+    dir_path = os.path.join("file", date_dir, new_filename)  # file/%Y/%m/%d/%H%M%Sファイル名
+    return dir_path
 
 
 class Piece(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    title = models.TextField(label="タイトル", max_length=50)
+    upload = models.FileField(upload_to=up_dir_path, validators=[FileExtensionValidator(["mp3",])])
     comment = models.TextField(label="コメント", max_length=800)
     created_at = models.DateTimeField(auto_now_add=True)
-    title = models.TextField(label="タイトル", max_length=50)
 
     def __str__(self):
         return self.comment
