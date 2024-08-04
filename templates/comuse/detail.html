@@ -1,7 +1,20 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}ホーム{% endblock %}
 
 {% block content %}
-<h1>詳細です</h1>
+<h2>{{ piece.title }}</h2>
+<p>投稿者:{{ piece.user }}</p>
+<p>投稿日:{{ piece.created_at }}</p>
+<p>コメント:{{ piece.comment }}</p>
+
+{% if piece.user == request.user %}
+<a href="{% url 'comuse:delete' comuse.pk %}">
+    <button type="button" class="blueback">削除</button>
+</a>
+{% endif %}
+<a href="{% url 'comuse:home' %}">
+    <button type="button" class="whiteback">ホームへ</button>
+</a>
+
 {% endblock %}

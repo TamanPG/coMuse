@@ -18,9 +18,10 @@
     </a>
     <ul class="top">
       <li>
-        <a href="{% url 'registration:logout' %}">
-          <button type="button" class="topbuttons whiteback">Logout</button>
-        </a>
+        <form action="{% url 'registration:logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="topbuttons whiteback">Logout</button>
+        </form>
       </li>
       <li>
         <a href="{% url 'registration:user_profile' username=request.user.username %}" id="usericon">
