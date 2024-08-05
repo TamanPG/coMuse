@@ -10,7 +10,7 @@ def up_dir_path(instance, filename):
     date_dir = date_time.strftime('%Y/%m/%d')  # 年/月/日
     time_stamp = date_time.strftime('%H%M%S')  # 時分秒(ex: 120101)
     new_filename = time_stamp + filename
-    dir_path = os.path.join("file", date_dir, new_filename)  # file/%Y/%m/%d/%H%M%Sファイル名
+    dir_path = os.path.join("files", date_dir, new_filename)  # files/%Y/%m/%d/%H%M%Sファイル名
     return dir_path
 
 

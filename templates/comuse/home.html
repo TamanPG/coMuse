@@ -3,5 +3,39 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>Homeです</h1>
+<h1>Home</h1>
+{% for piece in piece_list %}
+<div class="tweetbox">
+    <ul class="topbar">
+        <li>
+            <a href="{% url 'registration:user_profile' username=piece.user %}">
+                {{ piece.user }}
+            </a>
+        </li>
+        <li>
+            <p>{{ piece.created_at }}</p>
+        </li>
+    </ul>
+    <figure>
+        <figcaption>楽曲を再生</figcaption>
+        <audio controls src="/media/{{ piece.uploadedFile }}"></audio>
+    </figure>
+    <p class="contents">{{ piece.comment | linebreaksbr }}</p>
+    <ul class="buttombar">
+        <li>
+            <a href="{% url 'comuse:detail' piece.pk %}">
+                <i class="bi bi-eye-fill"></i>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'comuse:delete' piece.pk %}">
+                <i class="bi bi-trash-fill"></i>
+            </a>
+        </li>
+        <li>
+            <i class="bi bi-heart"></i>
+        </li>
+    </ul>
+</div>
+{% endfor %}
 {% endblock %}
