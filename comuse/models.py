@@ -16,9 +16,9 @@ def up_dir_path(instance, filename):
 
 class Piece(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title = models.TextField(label="タイトル", max_length=50)
-    upload = models.FileField(upload_to=up_dir_path, validators=[FileExtensionValidator(["mp3",])])
-    comment = models.TextField(label="コメント", max_length=800)
+    title = models.CharField(max_length=50)
+    uploadedFile = models.FileField(upload_to=up_dir_path, validators=[FileExtensionValidator(["mp3",])])
+    comment = models.TextField(max_length=800)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

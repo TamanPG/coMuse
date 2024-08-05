@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}楽曲を投稿{% endblock %}
+{% block title %}楽曲の投稿{% endblock %}
 
 {% block content %}
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
+    <p>タイトル {{ form.title }}</p>
+    <p>ファイル {{ form.uploadedFile }}</p>
+    <p>コメント {{ form.comment }}</p>
+    {% for error in field.errors%}
+        <p style="color: red;">{{error}}</p>
+    {% endfor%}
     <button type="submit" class="blueback">投稿</button>
 </form>
 {% endblock %}

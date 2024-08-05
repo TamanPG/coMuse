@@ -13,14 +13,19 @@
 <body>
   <header>
     {% if request.user.is_authenticated %}
-    <a href="{% url 'comuse:home' %}" id="homelink">
-      Twitter Clone
+    <a href="{% url 'comuse:home' %}" style="text-decoration:none;" id="logo">
+      coMuse
     </a>
     <ul class="top">
       <li>
+        <a href="{% url 'comuse:create' %}">
+          <button type="button" class="topbuttons blueback">投稿</button>
+        </a>
+      </li>
+      <li>
         <form action="{% url 'registration:logout' %}" method="post">
           {% csrf_token %}
-          <button type="submit" class="topbuttons whiteback">Logout</button>
+          <button type="submit" class="topbuttons whiteback">ログアウト</button>
         </form>
       </li>
       <li>
