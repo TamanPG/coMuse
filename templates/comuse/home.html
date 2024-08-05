@@ -16,8 +16,8 @@
             <p>{{ piece.created_at }}</p>
         </li>
     </ul>
-    <figure>
-        <figcaption>楽曲を再生</figcaption>
+    <figure class="contents">
+        <figcaption>再生</figcaption>
         <audio controls src="/media/{{ piece.uploadedFile }}"></audio>
     </figure>
     <p class="contents">{{ piece.comment | linebreaksbr }}</p>
