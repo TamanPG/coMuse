@@ -16,10 +16,13 @@
             <p>{{ piece.created_at }}</p>
         </li>
     </ul>
-    <figure class="contents">
-        <figcaption>再生</figcaption>
-        <audio controls src="/media/{{ piece.uploadedFile }}"></audio>
-    </figure>
+    <h2 class="contents">{{ piece.title }}</h2>
+    {% if piece.uploadedFile %}
+        <figure class="contents">
+            <figcaption>再生</figcaption>
+            <audio controls src="/media/{{ piece.uploadedFile }}"></audio>
+        </figure>
+    {% endif %}
     <p class="contents">{{ piece.comment | linebreaksbr }}</p>
     <ul class="buttombar">
         <li>
@@ -34,6 +37,9 @@
         </li>
         <li>
             <i class="bi bi-heart"></i>
+        </li>
+        <li>
+            <i class="bi bi-bookmark"></i>
         </li>
     </ul>
 </div>

@@ -6,7 +6,9 @@
 <h2>{{ piece.title }}</h2>
 <p>投稿者:{{ piece.user }}</p>
 <p>投稿日:{{ piece.created_at }}</p>
-<p>楽曲:<audio controls src="/media/{{ piece.uploadedFile }}"></audio></p>
+{% if piece.uploadedFile %}
+    <p>楽曲:<audio controls src="/media/{{ piece.uploadedFile }}"></audio></p>
+{% endif %}
 <p>コメント:{{ piece.comment }}</p>
 
 {% if piece.user == request.user %}

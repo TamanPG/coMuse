@@ -107,3 +107,19 @@ button {
 .bi.bi-trash-fill {
     color: rgb(255, 0, 0);
 }
+
+.bi.bi-heart {
+    color: rgb(234, 0, 255);
+}
+
+.bi.bi-heart-fill {
+    color: rgb(234, 0, 255);
+}
+
+.bi.bi-bookmark {
+    color: rgb(0, 91, 32);
+}
+
+.bi.bi-bookmark-fill {
+    color: rgb(0, 91, 32);
+}

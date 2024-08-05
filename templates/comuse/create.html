@@ -5,12 +5,12 @@
 {% block content %}
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <p>タイトル {{ form.title }}</p>
-    <p>ファイル {{ form.uploadedFile }}</p>
-    <p>コメント {{ form.comment }}</p>
-    {% for error in field.errors%}
-        <p style="color: red;">{{error}}</p>
-    {% endfor%}
+    <p>タイトル(必須) {{ form.title }}</p>
+    <p>ファイル(任意) {{ form.uploadedFile }}</p>
+    <p>コメント(必須) {{ form.comment }}</p>
+    {% for error in field.errors %}
+        <p style="color: red;">{{ error }}</p>
+    {% endfor %}
     <button type="submit" class="blueback">投稿</button>
 </form>
 {% endblock %}
