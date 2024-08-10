@@ -26,3 +26,23 @@ class Piece(models.Model):
     
     def __str__(self):
         return self.title
+
+
+class Like(models.Model):
+    target = models.ForeignKey(Piece, related_name="likes", on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="likes", on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["target", "user"], name="like_unique"),
+        ]
+
+
+class Bookmark(models.Model):
+    target = models.ForeignKey(Piece, related_name="bookmarks", on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="bookmarks", on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["target", "user"], name="like_unique"),
+        ]

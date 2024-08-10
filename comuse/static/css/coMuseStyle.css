@@ -108,6 +108,48 @@ button {
     color: rgb(255, 0, 0);
 }
 
+#profmid {
+    margin: 0px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+#profmid p {
+    margin: 4px;
+}
+
+#unfollow {
+    background: white;
+    border-color: red;
+    color: red;
+}
+
+#follow {
+    background: white;
+    border-color: blue;
+    color: blue;
+}
+
+.links {
+    color: rgb(32, 0, 156);
+    margin: 8px;
+}
+
+.like_btn {
+    border: none;
+    padding: 0;
+    width: 20px;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.bookmark_btn {
+    border: none;
+    padding: 0;
+    width: 20px;
+    background-color: rgba(255, 255, 255, 0);
+}
+
 .bi.bi-heart {
     color: rgb(234, 0, 255);
 }

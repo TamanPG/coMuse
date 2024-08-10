@@ -1,10 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, View
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 
 from .forms import PieceForm
-from .models import Piece
+from .models import Piece, Like, Bookmark
 
 User = get_user_model()
 
@@ -12,7 +14,15 @@ User = get_user_model()
 class HomeView(LoginRequiredMixin, ListView):
     template_name = "comuse/home.html"
     model = Piece
-    queryset = model.objects.select_related("user").order_by("-created_at")
+    queryset = model.objects.select_related("user").prefetch_related("likes", "bookmarks").order_by("-created_at")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        likes = Like.objects.select_related("target").filter(user=self.request.user).values_list("target", flat=True)
+        bookmarks = Bookmark.objects.select_related("target").filter(user=self.request.user).values_list("target", flat=True)
+        context["user_like_list"] = likes
+        context["user_bookmark_list"] = bookmarks
+        return context
 
 
 class PieceCreateView(LoginRequiredMixin, CreateView):
@@ -28,7 +38,15 @@ class PieceCreateView(LoginRequiredMixin, CreateView):
 class PieceDetailView(LoginRequiredMixin, DetailView):
     template_name = "comuse/detail.html"
     model = Piece
-    queryset = model.objects.select_related("user")
+    queryset = model.objects.select_related("user").prefetch_related("likes", "bookmarks")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["is_liked"] = self.object.likes.filter(user=self.request.user, target_id=self.kwargs["pk"]).exists()
+        context["liked_count"] = self.object.likes.filter(target_id=self.kwargs["pk"]).count()
+        context["is_bookmarked"] = self.object.bookmarks.filter(user=self.request.user, target_id=self.kwargs["pk"]).exists()
+        context["bookmarked_count"] = self.object.bookmarks.filter(target_id=self.kwargs["pk"]).count()
+        return context
 
 
 class PieceDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -44,3 +62,45 @@ class PieceDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         self.object = self.get_object()
         return self.request.user == self.object.user
+
+
+class LikeView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        piece = get_object_or_404(Piece, pk=kwargs["pk"])
+        Piece.objects.get_or_create(target=piece, user=user)
+        likes_count = Like.objects.filter(target=piece).count()
+        context = {"liked_count": likes_count}
+        return JsonResponse(context)
+
+
+class UnlikeView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        piece = get_object_or_404(Piece, pk=kwargs["pk"])
+        like = Like.objects.filter(target=piece, user=user)
+        like.delete()
+        likes_count = Like.objects.prefetch_related("target").filter(target=piece).count()
+        context = {"liked_count": likes_count}
+        return JsonResponse(context)
+
+
+class BookmarkView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        piece = get_object_or_404(Piece, pk=kwargs["pk"])
+        Piece.objects.get_or_create(target=piece, user=user)
+        bookmarks_count = Bookmark.objects.filter(target=piece).count()
+        context = {"bookmarked_count": bookmarks_count}
+        return JsonResponse(context)
+
+
+class DeleteBookmarkView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        piece = get_object_or_404(Piece, pk=kwargs["pk"])
+        bookmark = Like.objects.filter(target=piece, user=user)
+        bookmark.delete()
+        bookmarks_count = Bookmark.objects.prefetch_related("target").filter(target=piece).count()
+        context = {"bookmarked_count": bookmarks_count}
+        return JsonResponse(context)

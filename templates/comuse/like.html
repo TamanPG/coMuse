@@ -1,0 +1,15 @@
+<div>
+    {% if is_liked or piece.id in user_like_list %}
+    <button id="piece-{{piece.id}}" class="like_btn" data-url="{% url 'comuse:unlike' piece.id %}" data-pk={{piece.pk}}
+        data-is-liked="true">
+        <i class="bi bi-heart-fill"></i>
+    </button>
+    {% else %}
+    <button id="piece-{{piece.id}}" class="like_btn" data-url="{% url 'comuse:like' piece.id %}" data-pk={{piece.pk}}
+        data-is-liked="false">
+        <i class="bi bi-heart"></i>
+    </button>
+    {% endif %}
+
+    <span id="count_{{piece.id}}">{{ piece.likes.count }}</span>
+</div>

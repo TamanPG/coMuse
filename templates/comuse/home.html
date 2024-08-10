@@ -30,17 +30,15 @@
                 <i class="bi bi-eye-fill"></i>
             </a>
         </li>
-        <li>
-            <a href="{% url 'comuse:delete' piece.pk %}">
-                <i class="bi bi-trash-fill"></i>
-            </a>
-        </li>
-        <li>
-            <i class="bi bi-heart"></i>
-        </li>
-        <li>
-            <i class="bi bi-bookmark"></i>
-        </li>
+        {% if request.user == piece.user %}
+            <li>
+                <a href="{% url 'comuse:delete' piece.pk %}">
+                    <i class="bi bi-trash-fill"></i>
+                </a>
+            </li>
+        {% endif %}
+        {% include 'comuse/like.html' %}
+        {% include 'comuse/bookmark.html' %}
     </ul>
 </div>
 {% endfor %}
