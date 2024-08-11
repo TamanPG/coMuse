@@ -19,7 +19,7 @@
 
     for (const BookmarkBtn of document.getElementsByClassName('bookmark_btn')) {
 
-        LikeBtn.addEventListener('click',
+        BookmarkBtn.addEventListener('click',
             async () => {
                 const isBookmarked = BookmarkBtn.dataset.isBookmarked === 'true'
                 const response = await fetch(
@@ -27,10 +27,8 @@
                     { method: 'POST', headers: { 'X-CSRFToken': '{{ csrf_token }}' } },
                 )
                 const data = await response.json()
-                BookmarkBtn.innerHTML = isBookmarked ? '<i class="bi bi-heart"></i>' : '<i class="bi bi-heart-fill"></i>'
+                BookmarkBtn.innerHTML = isBookmarked ? '<i class="bi bi-bookmark"></i>' : '<i class="bi bi-bookmark-fill"></i>'
                 BookmarkBtn.dataset.isBookmarked = isBookmarked ? 'false' : 'true'
-                const BookmarkDisplay = document.querySelector("#count_" + BookmarkBtn.dataset.pk)
-                BookmarkDisplay.innerHTML = String(data.bookmarked_count)
             }
         )
     }

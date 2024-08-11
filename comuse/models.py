@@ -44,5 +44,5 @@ class Bookmark(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=["target", "user"], name="like_unique"),
+            models.UniqueConstraint(fields=["target", "user"], name="bookmark_unique"),
         ]

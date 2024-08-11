@@ -68,7 +68,7 @@ class LikeView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         user = request.user
         piece = get_object_or_404(Piece, pk=kwargs["pk"])
-        Piece.objects.get_or_create(target=piece, user=user)
+        Like.objects.get_or_create(target=piece, user=user)
         likes_count = Like.objects.filter(target=piece).count()
         context = {"liked_count": likes_count}
         return JsonResponse(context)
@@ -89,7 +89,7 @@ class BookmarkView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         user = request.user
         piece = get_object_or_404(Piece, pk=kwargs["pk"])
-        Piece.objects.get_or_create(target=piece, user=user)
+        Bookmark.objects.get_or_create(target=piece, user=user)
         bookmarks_count = Bookmark.objects.filter(target=piece).count()
         context = {"bookmarked_count": bookmarks_count}
         return JsonResponse(context)
@@ -99,7 +99,7 @@ class DeleteBookmarkView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         user = request.user
         piece = get_object_or_404(Piece, pk=kwargs["pk"])
-        bookmark = Like.objects.filter(target=piece, user=user)
+        bookmark = Bookmark.objects.filter(target=piece, user=user)
         bookmark.delete()
         bookmarks_count = Bookmark.objects.prefetch_related("target").filter(target=piece).count()
         context = {"bookmarked_count": bookmarks_count}
