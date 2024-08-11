@@ -9,7 +9,7 @@ from django.views.generic import CreateView, DetailView, ListView, View
 
 from .forms import SignupForm
 from .models import Friendship
-from comuse.models import Piece
+from comuse.models import Piece, Like, Bookmark
 
 User = get_user_model()
 
@@ -42,6 +42,8 @@ class UserProfileView(LoginRequiredMixin, DetailView):
         context["is_following"] = Friendship.objects.filter(following=user, follower=self.request.user).exists()
         context["following_num"] = Friendship.objects.filter(follower=user).count()
         context["followers_num"] = Friendship.objects.filter(following=user).count()
+        context["user_like_list"] = Like.objects.filter(user=self.request.user).values_list("target", flat=True)
+        context["user_bookmark_list"] = Bookmark.objects.filter(user=self.request.user).values_list("target", flat=True)
         return context
 
 
@@ -95,3 +97,20 @@ class FollowerListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs["username"])
         return Friendship.objects.select_related("follower").filter(following=user).order_by("-created_at")
+
+
+class MyBookmarksView(LoginRequiredMixin, DetailView):
+    template_name = "registration/bookmarkList.html"
+    model = User
+    context_object_name = "user"
+    slug_url_kwarg = "username"
+    slug_field = "username"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.object
+        bookmarked = Piece.objects.select_related("user").prefetch_related("likes", "bookmarks").filter(bookmarks__user=user).order_by("-created_at")
+        context["bookmarked_piece_list"] = bookmarked
+        context["user_like_list"] = Like.objects.filter(target__in=bookmarked).values_list("target", flat=True)
+        context["user_bookmark_list"] = Bookmark.objects.filter(user=user).values_list("target", flat=True)
+        return context

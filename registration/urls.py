@@ -18,4 +18,9 @@ urlpatterns = [
     path("<str:username>/unfollow/", views.UnFollowView.as_view(), name="unfollow"),
     path("<str:username>/following_list/", views.FollowingListView.as_view(), name="following_list"),
     path("<str:username>/follower_list/", views.FollowerListView.as_view(), name="follower_list"),
+    path(
+        "<str:username>/bookmarklist/",
+        views.MyBookmarksView.as_view(),
+        name="bookmarkList",
+    ),
 ]

@@ -15,9 +15,9 @@
 {% else %}
 <p>フォロワーはいません。</p>
 {% endif %}
-<button class="blueback">
-    <a href="{{request.META.HTTP_REFERER}}">
-        戻る
-    </a>
-</button>
+<a href="{{request.META.HTTP_REFERER}}"></a>
+    <button class="blueback">   
+        戻る  
+    </button>
+</a>
 {% endblock %}

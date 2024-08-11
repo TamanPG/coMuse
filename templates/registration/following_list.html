@@ -15,9 +15,9 @@
 {% else %}
 <p>フォローしているユーザーはいません。</p>
 {% endif %}
-<button class="blueback">
-    <a href="{{request.META.HTTP_REFERER}}">
+<a href="{{request.META.HTTP_REFERER}}">
+    <button class="blueback">
         戻る
-    </a>
-</button>
+    </button>
+</a>
 {% endblock %}

@@ -18,6 +18,11 @@
     </a>
     <ul class="top">
       <li>
+        <a href="{% url 'registration:bookmarkList' username=request.user.username %}">
+          <button type="button" class="topbuttons whiteback">ブックマーク一覧</button>
+        </a>
+      </li>
+      <li>
         <a href="{% url 'comuse:create' %}">
           <button type="button" class="topbuttons blueback">投稿</button>
         </a>
