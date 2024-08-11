@@ -10,17 +10,17 @@
 <p>{{ user.username }}</p>
 <div id="profmid">
     {% if request.user != user %}
-    {% if is_following is True %}
-    <form action="{% url 'registration:unfollow' user.username %}" method="POST">
-        <button type="submit" id="unfollow">アンフォロー</button>
-        {% csrf_token %}
-    </form>
-    {% else %}
-    <form action="{% url 'registration:follow' user.username %}" method="POST">
-        <button type="submit" id="follow">フォロー</button>
-        {% csrf_token %}
-    </form>
-    {% endif %}
+        {% if is_following is True %}
+        <form action="{% url 'registration:unfollow' user.username %}" method="POST">
+            <button type="submit" id="unfollow">アンフォロー</button>
+            {% csrf_token %}
+        </form>
+        {% else %}
+        <form action="{% url 'registration:follow' user.username %}" method="POST">
+            <button type="submit" id="follow">フォロー</button>
+            {% csrf_token %}
+        </form>
+        {% endif %}
     {% endif %}
     <p>フォロー数:<a href="{% url 'registration:following_list' user.username %}" class="links">{{ following_num }}</a></p>
     <p>フォロワー数:<a href="{% url 'registration:follower_list' user.username %}" class="links">{{ followers_num }}</a></p>
@@ -66,4 +66,9 @@
 <a href="{% url 'comuse:home' %}">
     <button class="blueback">ホームへ</button>
 </a>
+{% if request.user == user %}
+    <a href="{% url 'registration:signout' user.username %}">
+        <button class="redback">アカウント削除</button>
+    </a>
+{% endif %}
 {% endblock %}

@@ -43,6 +43,12 @@ button {
     color: rgb(0, 132, 255);
 }
 
+.redback {
+    background: rgb(196, 39, 0);
+    border: none;
+    color: white;
+}
+
 #usericon {
     text-decoration: none;
     font-size: 12pt;
