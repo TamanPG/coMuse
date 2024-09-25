@@ -3,44 +3,44 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-<h1>Profile</h1>
+<h1>プロフィール</h1>
 {% for message in messages %}
     <div>{{ message }}</div>
 {% endfor %}
-<p>{{ user.username }}</p>
+<h2>{{ user.username }}</h2>
 <div id="profmid">
     {% if request.user != user %}
         {% if is_following is True %}
         <form action="{% url 'registration:unfollow' user.username %}" method="POST">
-            <button type="submit" id="unfollow">アンフォロー</button>
+            <button type="submit" class="redback">フォロー解除</button>
             {% csrf_token %}
         </form>
         {% else %}
         <form action="{% url 'registration:follow' user.username %}" method="POST">
-            <button type="submit" id="follow">フォロー</button>
+            <button type="submit" class="blueback">フォロー</button>
             {% csrf_token %}
         </form>
         {% endif %}
     {% endif %}
-    <p>フォロー数:<a href="{% url 'registration:following_list' user.username %}" class="links">{{ following_num }}</a></p>
-    <p>フォロワー数:<a href="{% url 'registration:follower_list' user.username %}" class="links">{{ followers_num }}</a></p>
+    <p><a href="{% url 'registration:following_list' user.username %}">フォローしているアカウント:{{ following_num }}個</a></p>
+    <p><a href="{% url 'registration:follower_list' user.username %}">フォローされているアカウント(フォロワー):{{ followers_num }}個</a></p>
 </div>
 {% for piece in piece_list %}
 <div class="tweetbox">
     <ul class="topbar">
         <li>
             <a href="{% url 'registration:user_profile' username=piece.user %}">
-                {{ piece.user }}
+                投稿者:{{ piece.user }}
             </a>
         </li>
         <li>
-            <p>{{ piece.created_at }}</p>
+            <p>投稿日:{{ piece.created_at }}</p>
         </li>
     </ul>
-    <h2 class="contents">{{ piece.title }}</h2>
+    <h3 class="contents">タイトル:{{ piece.title }}</h3>
     {% if piece.uploadedFile %}
         <figure class="contents">
-            <figcaption>再生</figcaption>
+            <figcaption>メディアを再生</figcaption>
             <audio controls src="/media/{{ piece.uploadedFile }}"></audio>
         </figure>
     {% endif %}
@@ -48,13 +48,13 @@
     <ul class="buttombar">
         <li>
             <a href="{% url 'comuse:detail' piece.pk %}">
-                <i class="bi bi-eye-fill"></i>
+                <i class="bi bi-eye-fill"></i>詳細
             </a>
         </li>
         {% if request.user == piece.user %}
             <li>
                 <a href="{% url 'comuse:delete' piece.pk %}">
-                    <i class="bi bi-trash-fill"></i>
+                    <i class="bi bi-trash-fill"></i>削除
                 </a>
             </li>
         {% endif %}

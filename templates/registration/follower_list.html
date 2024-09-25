@@ -7,7 +7,7 @@
 {% if follower_list %}
 {% for follower in follower_list %}
 <div>
-    <a href="{% url 'registration:user_profile' username=follower.follower.username %}" class="links">
+    <a href="{% url 'registration:user_profile' username=follower.follower.username %}" class="followUsers">
         {{ follower.follower }}
     </a>
 </div>
@@ -17,7 +17,7 @@
 {% endif %}
 <a href="{{request.META.HTTP_REFERER}}"></a>
     <button class="blueback">   
-        戻る  
+        前のページに戻る  
     </button>
 </a>
 {% endblock %}

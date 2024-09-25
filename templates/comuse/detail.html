@@ -1,19 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}作品詳細{% endblock %}
+{% block title %}投稿詳細{% endblock %}
 
 {% block content %}
-<h2>{{ piece.title }}</h2>
+<h2>タイトル:{{ piece.title }}</h2>
 <p>投稿者:{{ piece.user }}</p>
 <p>投稿日:{{ piece.created_at }}</p>
 {% if piece.uploadedFile %}
-    <p>楽曲:<audio controls src="/media/{{ piece.uploadedFile }}"></audio></p>
+    <figure class="contents">
+        <figcaption>メディアを再生</figcaption>
+        <audio controls src="/media/{{ piece.uploadedFile }}"></audio>
+    </figure>
 {% endif %}
 <p>コメント:{{ piece.comment }}</p>
 
 {% if piece.user == request.user %}
 <a href="{% url 'comuse:delete' piece.pk %}">
-    <button type="button" class="blueback">削除</button>
+    <button type="button" class="blueback">投稿を削除</button>
 </a>
 {% endif %}
 <a href="{% url 'comuse:home' %}">

@@ -3,11 +3,11 @@
 {% block title %}followings{% endblock %}
 
 {% block content %}
-<h1>フォロー一覧</h1>
+<h1>フォローしているアカウント一覧</h1>
 {% if following_list %}
 {% for following in following_list %}
 <div>
-    <a href="{% url 'registration:user_profile' username=following.following.username %}" class="links">
+    <a href="{% url 'registration:user_profile' username=following.following.username %}" class="followUsers">
         {{ following.following }}
     </a>
 </div>

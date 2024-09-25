@@ -1,22 +1,43 @@
+:root {
+    --bgcolor: #ddd;
+    --txcolor: #000;
+    --accolor: saddlebrown;
+    --subaccolor: wheat;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+      --bgcolor: #000;
+      --txcolor: #ddd;
+      --accolor: orange;
+      --subaccolor: rgb(60, 54, 44);
+    }
+}
+body {
+    color: var(--txcolor);
+    background-color: var(--bgcolor);
+    transition: .5s;
+}
+
 header {
     display: flex;
 }
 
 a {
-    text-decoration: none;
+    color: fuchsia;
 }
 
 #logo {
     width: 30%;
-    margin: 4px 0;
-    font-size: 16pt;
-    color: rgb(0, 132, 255);
+    margin: 12px;
+    padding: 4px;
+    font-size: 24pt;
+    color: var(--accolor);
 }
 
 button {
-    font-size: 12pt;
+    font-size: 16pt;
     padding: 4px;
-    margin: 0 4px;
+    margin: 12px;
     border-radius: 4px;
 }
 
@@ -28,38 +49,31 @@ button {
 }
 
 .topbuttons {
-    width: fit-content;
+    min-width: min(100px, 100%);
+    height: fit-content;
 }
 
 .blueback {
-    background: rgb(0, 132, 255);
-    border: none;
-    color: white;
+    background: var(--accolor);
+    border: 2px solid var(--accolor);
+    color: var(--bgcolor);
 }
 
 .whiteback {
-    background: whitesmoke;
-    border: none;
-    color: rgb(0, 132, 255);
+    background: var(--bgcolor);
+    border: 2px solid var(--accolor);
+    color: var(--txcolor);
 }
 
 .redback {
-    background: rgb(196, 39, 0);
-    border: none;
-    color: white;
-}
-
-#usericon {
-    text-decoration: none;
-    font-size: 12pt;
-    padding: 4px 4px;
-    margin: 0 4px;
-    color: rgb(0, 132, 255);
+    background: rgb(255, 0, 0);
+    border: 2px solid red;
+    color: #ddd;
 }
 
 .tweetbox {
     margin: 2em 0;
-    background: #ffffff;
+    background: var(--bgcolor);
 }
 
 .tweetbox p {
@@ -72,12 +86,12 @@ button {
     margin: 0;
     display: flex;
     list-style: none;
-    font-size: 16px;
+    font-size: 20px;
     align-items: center;
     padding: 8px 20px;
-    background: #e7eaed;
-    color: #000000;
-    border: solid 2px #bbc9cd;
+    background: var(--subaccolor);
+    color: var(--txcolor);
+    border: solid 2px var(--accolor);
     border-radius: 8px 8px 0 0;
 }
 
@@ -85,19 +99,19 @@ button {
     padding: 16px 20px;
     margin: 0;
     height: max-content;
-    border-left: solid 2px #bbc9cd;
-    border-right: solid 2px #bbc9cd;
+    border-left: solid 2px var(--accolor);
+    border-right: solid 2px var(--accolor);
 }
 
 .tweetbox .buttombar {
     margin: 0;
     display: flex;
     list-style: none;
-    font-size: 16px;
+    font-size: 20px;
     align-items: center;
     padding: 8px 20px;
-    background: #e7eaed;
-    border: solid 2px #bbc9cd;
+    background: var(--subaccolor);
+    border: solid 2px var(--accolor);
     border-radius: 0 0 8px 8px;
 }
 
@@ -105,13 +119,8 @@ button {
     padding: 0 8px 0 0;
 }
 
-.bi.bi-plus-square {
-    color: rgb(0, 221, 196);
-    font-size: 20pt;
-}
-
 .bi.bi-trash-fill {
-    color: rgb(255, 0, 0);
+    color: red;
 }
 
 #profmid {
@@ -125,49 +134,45 @@ button {
     margin: 4px;
 }
 
-#unfollow {
-    background: white;
-    border-color: red;
-    color: red;
-}
-
-#follow {
-    background: white;
-    border-color: blue;
-    color: blue;
-}
-
-.links {
-    color: rgb(32, 0, 156);
-    margin: 8px;
-}
-
 .like_btn {
     border: none;
-    padding: 0;
-    width: 20px;
-    background-color: rgba(255, 255, 255, 0);
+    padding: 2;
+    margin: 2;
+    width: fit-content;
+    background-color: var(--txcolor);
 }
 
 .bookmark_btn {
     border: none;
-    padding: 0;
-    width: 20px;
-    background-color: rgba(255, 255, 255, 0);
+    padding: 2;
+    margin: 2;
+    width: fit-content;
+    background-color: var(--txcolor);
 }
 
 .bi.bi-heart {
-    color: rgb(234, 0, 255);
+    color: magenta;
 }
 
 .bi.bi-heart-fill {
-    color: rgb(234, 0, 255);
+    color: magenta;
 }
 
 .bi.bi-bookmark {
-    color: rgb(0, 91, 32);
+    color: green;
 }
 
 .bi.bi-bookmark-fill {
-    color: rgb(0, 91, 32);
+    color: green;
+}
+
+.welcomeText {
+    display: inline-block;
+    padding: 10px 20px;
+}
+.welcomeTitle {
+    text-align: center;
+    padding: 150px;
+    background-image: url(../img/welcomeBG.jpeg);
+    background-size: cover;
 }
