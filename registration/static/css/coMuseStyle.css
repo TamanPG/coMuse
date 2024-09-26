@@ -12,6 +12,11 @@
       --subaccolor: rgb(60, 54, 44);
     }
 }
+
+html {
+    font-size: 62.5%;
+}
+
 body {
     color: var(--txcolor);
     background-color: var(--bgcolor);
@@ -19,7 +24,29 @@ body {
 }
 
 header {
+    margin: 2%;
     display: flex;
+    height: fit-content;
+}
+
+li {
+    min-width: 20%;
+}
+
+p {
+    font-size: 2rem;
+}
+
+h1 {
+    font-size: 3.6rem;
+}
+
+h2 {
+    font-size: 3rem;
+}
+
+h3 {
+    font-size: 2.4rem;
 }
 
 a {
@@ -28,29 +55,30 @@ a {
 
 #logo {
     width: 30%;
-    margin: 12px;
-    padding: 4px;
-    font-size: 24pt;
+    margin: 1%;
+    padding: 1%;
+    font-size: 3.2rem;
     color: var(--accolor);
 }
 
 button {
-    font-size: 16pt;
-    padding: 4px;
-    margin: 12px;
+    font-size: 2rem;
+    padding: 2%;
+    margin: 2%;
     border-radius: 4px;
+    min-width: 80%;
+    height: fit-content;
 }
 
 .top {
     width: 70%;
+    height: 20%;
     display: flex;
     justify-content: flex-end;
     list-style: none;
-}
-
-.topbuttons {
-    min-width: min(100px, 100%);
-    height: fit-content;
+    margin: 1%;
+    padding: 1%;
+    text-align: right;
 }
 
 .blueback {
@@ -72,23 +100,23 @@ button {
 }
 
 .tweetbox {
-    margin: 2em 0;
+    margin: 2% 0;
     background: var(--bgcolor);
 }
 
 .tweetbox p {
     height: min-content;
     margin: 0;
-    padding: 0 20px;
+    padding: 0 4%;
 }
 
 .tweetbox .topbar {
     margin: 0;
     display: flex;
     list-style: none;
-    font-size: 20px;
+    font-size: 2rem;
     align-items: center;
-    padding: 8px 20px;
+    padding: 4% 8%;
     background: var(--subaccolor);
     color: var(--txcolor);
     border: solid 2px var(--accolor);
@@ -96,7 +124,7 @@ button {
 }
 
 .tweetbox .contents {
-    padding: 16px 20px;
+    padding: 4% 8%;
     margin: 0;
     height: max-content;
     border-left: solid 2px var(--accolor);
@@ -107,16 +135,16 @@ button {
     margin: 0;
     display: flex;
     list-style: none;
-    font-size: 20px;
+    font-size: 2rem;
     align-items: center;
-    padding: 8px 20px;
+    padding: 4% 8%;
     background: var(--subaccolor);
     border: solid 2px var(--accolor);
     border-radius: 0 0 8px 8px;
 }
 
 .tweetbox .bi {
-    padding: 0 8px 0 0;
+    padding: 0 4% 0 0;
 }
 
 .bi.bi-trash-fill {
@@ -124,28 +152,31 @@ button {
 }
 
 #profmid {
-    margin: 0px;
+    margin: 0;
     padding: 0;
     display: flex;
     align-items: center;
 }
 
 #profmid p {
-    margin: 4px;
+    margin: 4%;
 }
 
-.like_btn {
-    border: none;
-    padding: 2;
-    margin: 2;
-    width: fit-content;
-    background-color: var(--txcolor);
+.minibuttons {
+    float: left;
+    margin: 8%;
+    display: flex;
 }
 
-.bookmark_btn {
+.minibuttons p {
+    padding: 4%;
+    margin: 4% 4% 0% 4%;
+}
+
+.likebmbutton {
     border: none;
-    padding: 2;
-    margin: 2;
+    padding: 4%;
+    margin: 4% 0% 4% 4%;
     width: fit-content;
     background-color: var(--txcolor);
 }
@@ -168,11 +199,13 @@ button {
 
 .welcomeText {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 4% 8%;
 }
 .welcomeTitle {
     text-align: center;
-    padding: 150px;
+    padding: 16%;
+    background-position: top;
     background-image: url(../img/welcomeBG.jpeg);
     background-size: cover;
+    background-repeat: no-repeat;
 }
