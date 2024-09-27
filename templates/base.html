@@ -18,37 +18,37 @@
       coMuse
     </a>
     <ul class="top">
-      <li>
+      <li class="buttonCover">
         <a href="{% url 'registration:bookmarkList' username=request.user.username %}">
-          <button type="button" class="topbuttons whiteback">ブックマーク一覧</button>
+          <button type="button" class="topbuttons whiteback">ブックマーク<br>一覧</button>
         </a>
       </li>
-      <li>
+      <li class="buttonCover">
         <a href="{% url 'comuse:create' %}">
           <button type="button" class="topbuttons blueback">投稿</button>
         </a>
       </li>
-      <li>
+      <li class="buttonCover">
         <form action="{% url 'registration:logout' %}" method="post">
           {% csrf_token %}
           <button type="submit" class="topbuttons whiteback">ログアウト</button>
         </form>
       </li>
-      <li>
+      <li class="buttonCover">
         <a href="{% url 'registration:user_profile' username=request.user.username %}" id="usericon">
-          {{ request.user.username }}
+          <button type="button" class="topbuttons blueback">プロフィール</button>
         </a>
       </li>
     </ul>
     {% else %}
     <p id="logo">coMuse</p>
     <ul class="top">
-      <li>
+      <li class="buttonCover">
         <a href="{% url 'registration:login' %}">
           <button type="button" class="topbuttons whiteback">ログイン</button>
         </a>
       </li>
-      <li>
+      <li class="buttonCover">
         <a href="{% url 'registration:signup' %}">
           <button type="button" class="topbuttons blueback">登録</button>
         </a>

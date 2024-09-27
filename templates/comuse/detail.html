@@ -15,11 +15,11 @@
 <p>コメント:{{ piece.comment }}</p>
 
 {% if piece.user == request.user %}
-<a href="{% url 'comuse:delete' piece.pk %}">
+<a href="{% url 'comuse:delete' piece.pk %}" class="buttonCover">
     <button type="button" class="blueback">投稿を削除</button>
 </a>
 {% endif %}
-<a href="{% url 'comuse:home' %}">
+<a href="{% url 'comuse:home' %}" class="buttonCover">
     <button type="button" class="whiteback">ホームへ</button>
 </a>
 

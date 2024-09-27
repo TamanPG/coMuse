@@ -29,10 +29,6 @@ header {
     height: fit-content;
 }
 
-li {
-    min-width: 20%;
-}
-
 p {
     font-size: 2rem;
 }
@@ -63,11 +59,15 @@ a {
 
 button {
     font-size: 2rem;
-    padding: 2%;
+    padding: 1%;
     margin: 2%;
     border-radius: 4px;
-    min-width: 80%;
+    min-width: 12%;
     height: fit-content;
+}
+
+.buttonCover {
+    min-width: 20%;
 }
 
 .top {
@@ -79,6 +79,10 @@ button {
     margin: 1%;
     padding: 1%;
     text-align: right;
+}
+
+.topbuttons {
+    min-width: 80%;
 }
 
 .blueback {
@@ -116,7 +120,7 @@ button {
     list-style: none;
     font-size: 2rem;
     align-items: center;
-    padding: 4% 8%;
+    padding: 1%;
     background: var(--subaccolor);
     color: var(--txcolor);
     border: solid 2px var(--accolor);
@@ -124,23 +128,27 @@ button {
 }
 
 .tweetbox .contents {
-    padding: 4% 8%;
+    padding: 1% 2%;
     margin: 0;
     height: max-content;
     border-left: solid 2px var(--accolor);
     border-right: solid 2px var(--accolor);
 }
 
-.tweetbox .buttombar {
+.tweetbox .bottombar {
     margin: 0;
     display: flex;
     list-style: none;
     font-size: 2rem;
     align-items: center;
-    padding: 4% 8%;
+    padding: 1%;
     background: var(--subaccolor);
     border: solid 2px var(--accolor);
     border-radius: 0 0 8px 8px;
+}
+
+.bottombar li {
+    min-width: 10%;
 }
 
 .tweetbox .bi {
@@ -164,21 +172,21 @@ button {
 
 .minibuttons {
     float: left;
-    margin: 8%;
-    display: flex;
+    margin: 1%;
+    display: inline-flex;
 }
 
-.minibuttons p {
-    padding: 4%;
-    margin: 4% 4% 0% 4%;
+.minibuttons span {
+    padding: 1%;
+    margin: 1%;
 }
 
-.likebmbutton {
+.likebtn, .bmbtn {
     border: none;
-    padding: 4%;
-    margin: 4% 0% 4% 4%;
+    padding: 1%;
+    margin: 1%;
     width: fit-content;
-    background-color: var(--txcolor);
+    background-color: transparent;
 }
 
 .bi.bi-heart {

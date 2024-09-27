@@ -1,5 +1,5 @@
 <script>
-    for (const LikeBtn of document.getElementsByClassName('like_btn')) {
+    for (const LikeBtn of document.getElementsByClassName('likebtn')) {
 
         LikeBtn.addEventListener('click',
             async () => {
@@ -11,13 +11,15 @@
                 const data = await response.json()
                 LikeBtn.innerHTML = isLiked ? '<i class="bi bi-heart"></i>' : '<i class="bi bi-heart-fill"></i>'
                 LikeBtn.dataset.isLiked = isLiked ? 'false' : 'true'
+                const likeText = document.querySelector("#liketxt_" + LikeBtn.dataset.pk)
+                likeText.innerHTML = isLiked ? 'いいね！' : 'いいね解除';
                 const LikeDisplay = document.querySelector("#count_" + LikeBtn.dataset.pk)
                 LikeDisplay.innerHTML = String(data.liked_count)
             }
         )
     }
 
-    for (const BookmarkBtn of document.getElementsByClassName('bookmark_btn')) {
+    for (const BookmarkBtn of document.getElementsByClassName('bmbtn')) {
 
         BookmarkBtn.addEventListener('click',
             async () => {
@@ -29,6 +31,8 @@
                 const data = await response.json()
                 BookmarkBtn.innerHTML = isBookmarked ? '<i class="bi bi-bookmark"></i>' : '<i class="bi bi-bookmark-fill"></i>'
                 BookmarkBtn.dataset.isBookmarked = isBookmarked ? 'false' : 'true'
+                const bmText = document.querySelector("#bmtxt_" + BookmarkBtn.dataset.pk)
+                bmText.innerHTML = isBookmarked ? 'ブックマーク' : 'ブックマーク解除';
             }
         )
     }

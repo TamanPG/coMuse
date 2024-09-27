@@ -1,19 +1,17 @@
-{% if is_liked or piece.id in user_like_list %}
-    <div class="minibuttons">
-        <button id="piece-{{piece.id}}" class="likebmbutton" data-url="{% url 'comuse:unlike' piece.id %}" data-pk={{piece.pk}}
+<div class="minibuttons" style="width: 12%;">
+    {% if is_liked or piece.id in user_like_list %}
+        <button id="piece-{{piece.id}}" class="likebtn" data-url="{% url 'comuse:unlike' piece.id %}" data-pk={{piece.pk}}
             data-is-liked="true">
             <i class="bi bi-heart-fill"></i>
         </button>
-        <p>いいね解除</p>
-    </div>
-{% else %}
-    <div class="minibuttons">
-        <button id="piece-{{piece.id}}" class="likebmbutton" data-url="{% url 'comuse:like' piece.id %}" data-pk={{piece.pk}}
+        <span id="liketxt_{{piece.id}}">いいね解除</span>
+    {% else %}
+        <button id="piece-{{piece.id}}" class="likebtn" data-url="{% url 'comuse:like' piece.id %}" data-pk={{piece.pk}}
             data-is-liked="false">
             <i class="bi bi-heart"></i>
         </button>
-        <p>いいね！</p>
-    </div>
-{% endif %}
+        <span id="liketxt_{{piece.id}}">いいね！</span>
+    {% endif %}
+</div>
 
-<span id="count_{{piece.id}}" alt="いいねの数">いいね数:{{ piece.likes.count }}</span>
+<span style="min-width: 12%; margin: 1%;">いいね数:<span id="count_{{piece.id}}">{{ piece.likes.count }}</span></span>

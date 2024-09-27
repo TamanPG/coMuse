@@ -12,12 +12,12 @@
     {% if request.user != user %}
         {% if is_following is True %}
         <form action="{% url 'registration:unfollow' user.username %}" method="POST">
-            <button type="submit" class="redback">フォロー解除</button>
+            <div class="buttonCover"><button type="submit" class="redback">フォロー解除</button></div>
             {% csrf_token %}
         </form>
         {% else %}
         <form action="{% url 'registration:follow' user.username %}" method="POST">
-            <button type="submit" class="blueback">フォロー</button>
+            <div class="buttonCover"><button type="submit" class="blueback">フォロー</button></div>
             {% csrf_token %}
         </form>
         {% endif %}
@@ -45,7 +45,7 @@
         </figure>
     {% endif %}
     <p class="contents">{{ piece.comment | linebreaksbr }}</p>
-    <ul class="buttombar">
+    <ul class="bottombar">
         <li>
             <a href="{% url 'comuse:detail' piece.pk %}">
                 <i class="bi bi-eye-fill"></i>詳細
@@ -64,10 +64,10 @@
 </div>
 {% endfor %}
 <a href="{% url 'comuse:home' %}">
-    <button class="blueback">ホームへ</button>
+    <div class="buttonCover"><button class="blueback">ホームへ</button></div>
 </a>
 {% if request.user == user %}
-    <a href="{% url 'registration:signout' user.username %}">
+    <a href="{% url 'registration:signout' user.username %}" class="buttonCover">
         <button class="redback">アカウント削除</button>
     </a>
 {% endif %}
