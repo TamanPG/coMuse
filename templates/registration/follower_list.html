@@ -7,7 +7,7 @@
 {% if follower_list %}
 {% for follower in follower_list %}
 <div>
-    <a href="{% url 'registration:user_profile' username=follower.follower.username %}" class="followUsers">
+    <a href="{% url 'registration:user_profile' username=follower.follower.username %}" style="font-size: 2rem;">
         {{ follower.follower }}
     </a>
 </div>

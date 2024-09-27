@@ -29,8 +29,12 @@ header {
     height: fit-content;
 }
 
-p {
+p, li {
     font-size: 2rem;
+}
+
+.errorlist {
+    color: red;
 }
 
 h1 {
