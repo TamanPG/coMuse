@@ -44,7 +44,7 @@
             <audio controls src="/media/{{ piece.uploadedFile }}"></audio>
         </figure>
     {% endif %}
-    <p class="contents">{{ piece.comment | linebreaksbr }}</p>
+    <p class="contents">{{ piece.caption | linebreaksbr }}</p>
     <ul class="bottombar">
         <li>
             <a href="{% url 'comuse:detail' piece.pk %}">

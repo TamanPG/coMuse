@@ -3,10 +3,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, View
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 
-from .forms import PieceForm
-from .models import Piece, Like, Bookmark
+from .forms import PieceForm, CommentForm
+from .models import Piece, Like, Bookmark, Comment
 
 User = get_user_model()
 
@@ -46,6 +46,7 @@ class PieceDetailView(LoginRequiredMixin, DetailView):
         context["liked_count"] = self.object.likes.filter(target_id=self.kwargs["pk"]).count()
         context["is_bookmarked"] = self.object.bookmarks.filter(user=self.request.user, target_id=self.kwargs["pk"]).exists()
         context["bookmarked_count"] = self.object.bookmarks.filter(target_id=self.kwargs["pk"]).count()
+        context["comment_form"] = CommentForm
         return context
 
 
@@ -104,3 +105,17 @@ class DeleteBookmarkView(LoginRequiredMixin, View):
         bookmarks_count = Bookmark.objects.prefetch_related("target").filter(target=piece).count()
         context = {"bookmarked_count": bookmarks_count}
         return JsonResponse(context)
+
+
+class CommentView(LoginRequiredMixin, CreateView):
+    model = Comment
+    form_class = CommentForm
+ 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        piece_pk = self.kwargs.get('pk')
+        piece = get_object_or_404(Piece, pk=piece_pk)
+        comment = form.save(commit=False)
+        comment.target = piece
+        comment.save()
+        return redirect('comuse:detail', pk=piece_pk)

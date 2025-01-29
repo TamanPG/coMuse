@@ -36,4 +36,19 @@
             }
         )
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        let commentButton = document.getElementById("comment_button");
+        let commentFormContainer = document.getElementById("comment_form_container");
+
+        commentButton.addEventListener("click", function () {
+            if (commentFormContainer.style.display === "none" || commentFormContainer.style.display === "") {
+                commentFormContainer.style.display = "block";
+                commentButton.textContent = "非表示";
+            } else {
+                commentFormContainer.style.display = "none";
+                commentButton.textContent = "返信";
+            }
+        });
+    });
 </script>

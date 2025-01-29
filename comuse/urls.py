@@ -13,4 +13,5 @@ urlpatterns = [
     path('<int:pk>/unlike/', views.UnlikeView.as_view(), name='unlike'),
     path('<int:pk>/bookmark/', views.BookmarkView.as_view(), name='bookmark'),
     path('<int:pk>/deletebookmark/', views.DeleteBookmarkView.as_view(), name='deleteBookmark'),
+    path('<int:pk>/comment/', views.CommentView.as_view(), name='comment'),
 ]

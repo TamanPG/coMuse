@@ -18,11 +18,12 @@ class Piece(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     uploadedFile = models.FileField(blank=True, null=True, upload_to=up_dir_path, validators=[FileExtensionValidator(["mp3",])])
-    comment = models.TextField(max_length=800)
+    caption = models.TextField(max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True)
+    commentAllowance = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.comment
+        return self.caption
     
     def __str__(self):
         return self.title
@@ -46,3 +47,12 @@ class Bookmark(models.Model):
         constraints = [
             models.UniqueConstraint(fields=["target", "user"], name="bookmark_unique"),
         ]
+
+class Comment(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    content = models.TextField(max_length=400)
+    target = models.ForeignKey(Piece, related_name="comments", on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.content

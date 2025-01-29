@@ -34,7 +34,7 @@ p, li {
 }
 
 .errorlist {
-    color: red;
+    color: orange;
 }
 
 h1 {
@@ -220,4 +220,9 @@ button {
     background-image: url(../img/welcomeBG.jpeg);
     background-size: cover;
     background-repeat: no-repeat;
+}
+
+#comment_form textarea {
+    width: 60%;
+    font-size: 2rem;
 }

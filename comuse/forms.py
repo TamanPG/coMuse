@@ -1,9 +1,12 @@
-from django.forms import ModelForm
+import django.forms as forms
+from .models import Piece, Comment
 
-from .models import Piece
-
-
-class PieceForm(ModelForm):
+class PieceForm(forms.ModelForm):
     class Meta:
         model = Piece
-        fields = ("title", "uploadedFile", "comment",)
+        fields = ("title", "uploadedFile", "caption", "commentAllowance")
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ("content",)

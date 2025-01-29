@@ -12,8 +12,32 @@
         <audio controls src="/media/{{ piece.uploadedFile }}"></audio>
     </figure>
 {% endif %}
-<p>コメント:{{ piece.comment }}</p>
-
+<p>{{ piece.caption }}</p>
+{% if piece.commentAllowance %}
+<button type="button" id="comment_button" class="blueback">返信</button>
+<div id="comment_form_container" style="display: none;">
+    <form action="{% url 'comuse:comment' piece.pk %}" method="POST">
+        <div>
+            <span id="comment_form">{{ comment_form.content }}</span>
+            {% for error in field.errors %}
+                <p style="color: orange;">{{ error }}</p>
+            {% endfor %}
+            {% csrf_token %}
+        </div>
+        <button type="submit" class="blueback">コメント</button>
+    </form>
+</div>
+<div>
+    {% for comment in piece.comments.all %}
+    <div class="comment_content">
+        <p>{{ comment.user }} : {{ comment.content }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>作者はコメントを許可していません</p>
+{% endif %}
+<p></p>
 {% if piece.user == request.user %}
 <a href="{% url 'comuse:delete' piece.pk %}" class="buttonCover">
     <button type="button" class="blueback">投稿を削除</button>
