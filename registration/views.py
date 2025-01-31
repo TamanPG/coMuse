@@ -132,3 +132,20 @@ class MyBookmarksView(LoginRequiredMixin, DetailView):
         context["user_like_list"] = Like.objects.filter(target__in=bookmarked).values_list("target", flat=True)
         context["user_bookmark_list"] = Bookmark.objects.filter(user=user).values_list("target", flat=True)
         return context
+
+
+class TimelineView(LoginRequiredMixin, ListView):
+    template_name = "registration/timeline.html"
+    model = Piece
+
+    def get_queryset(self):
+        followings = Friendship.objects.filter(follower=self.request.user).values_list('following', flat=True)
+        return Piece.objects.select_related("user").prefetch_related("likes", "bookmarks").filter(user__in=followings).order_by('-created_at')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        likes = Like.objects.select_related("target").filter(user=self.request.user).values_list("target", flat=True)
+        bookmarks = Bookmark.objects.select_related("target").filter(user=self.request.user).values_list("target", flat=True)
+        context["user_like_list"] = likes
+        context["user_bookmark_list"] = bookmarks
+        return context

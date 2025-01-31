@@ -110,7 +110,7 @@ class DeleteBookmarkView(LoginRequiredMixin, View):
 class CommentView(LoginRequiredMixin, CreateView):
     model = Comment
     form_class = CommentForm
- 
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         piece_pk = self.kwargs.get('pk')
@@ -119,3 +119,17 @@ class CommentView(LoginRequiredMixin, CreateView):
         comment.target = piece
         comment.save()
         return redirect('comuse:detail', pk=piece_pk)
+
+
+class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Comment
+
+    def get_object(self):
+        return Comment.objects.get(pk=self.kwargs['comment_pk'])  # urlの因数として渡すときはcomment_pk
+
+    def test_func(self):
+        self.object = self.get_object()
+        return self.request.user == self.object.user
+    
+    def get_success_url(self):
+        return reverse_lazy('comuse:detail', kwargs={'pk': self.kwargs['pk']})

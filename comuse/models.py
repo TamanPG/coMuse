@@ -7,10 +7,10 @@ import datetime
 
 def up_dir_path(instance, filename):
     date_time = datetime.datetime.now()
-    date_dir = date_time.strftime('%Y/%m/%d')  # 年/月/日
-    time_stamp = date_time.strftime('%H%M%S')  # 時分秒(ex: 120101)
+    date_dir = date_time.strftime('%Y/%m/%d')
+    time_stamp = date_time.strftime('%H%M%S')
     new_filename = time_stamp + filename
-    dir_path = os.path.join("files", date_dir, new_filename)  # files/%Y/%m/%d/%H%M%Sファイル名
+    dir_path = os.path.join("files", date_dir, new_filename)
     return dir_path
 
 
@@ -48,6 +48,7 @@ class Bookmark(models.Model):
             models.UniqueConstraint(fields=["target", "user"], name="bookmark_unique"),
         ]
 
+
 class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField(max_length=400)
@@ -56,3 +57,8 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields={"user", "created_at"}, name="comment_unique"),
+        ]

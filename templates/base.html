@@ -19,6 +19,11 @@
     </a>
     <ul class="top">
       <li class="buttonCover">
+        <a href="{% url 'registration:timeline' username=request.user.username %}">
+          <button type="button" class="topbuttons whiteback">タイムライン</button>
+        </a>
+      </li>
+      <li class="buttonCover">
         <a href="{% url 'registration:bookmarkList' username=request.user.username %}">
           <button type="button" class="topbuttons whiteback">ブックマーク</button>
         </a>

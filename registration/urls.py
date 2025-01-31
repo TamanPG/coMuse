@@ -24,4 +24,5 @@ urlpatterns = [
         views.MyBookmarksView.as_view(),
         name="bookmarkList",
     ),
+    path('<str:username>/timeline/', views.TimelineView.as_view(), name='timeline'),
 ]

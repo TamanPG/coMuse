@@ -14,7 +14,7 @@
 {% endif %}
 <p>{{ piece.caption }}</p>
 {% if piece.commentAllowance %}
-<button type="button" id="comment_button" class="blueback">返信</button>
+<button type="button" id="comment_button" class="blueback">コメント</button>
 <div id="comment_form_container" style="display: none;">
     <form action="{% url 'comuse:comment' piece.pk %}" method="POST">
         <div>
@@ -24,15 +24,24 @@
             {% endfor %}
             {% csrf_token %}
         </div>
-        <button type="submit" class="blueback">コメント</button>
+        <button type="submit" class="blueback">投稿</button>
     </form>
 </div>
 <div>
-    {% for comment in piece.comments.all %}
-    <div class="comment_content">
-        <p>{{ comment.user }} : {{ comment.content }}</p>
-    </div>
-    {% endfor %}
+    <p>▼コメント一覧</p>
+    {% if piece.comments.all %}
+        {% for comment in piece.comments.all %}
+        <div>
+            <p>{{ comment.user }} :<br>  {{ comment.content | linebreaksbr }}
+            {% if comment.user == request.user %}
+                ...<a href="{% url 'comuse:deleteComment' piece.pk comment.id %}" style="font-size: 2rem;"><i class="bi bi-trash-fill"></i>コメントを削除</a>
+            {% endif %}
+            </p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>ナイヨー</p>
+    {% endif %}
 </div>
 {% else %}
 <p>作者はコメントを許可していません</p>
