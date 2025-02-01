@@ -7,6 +7,7 @@ from django.shortcuts import redirect, get_object_or_404
 
 from .forms import PieceForm, CommentForm
 from .models import Piece, Like, Bookmark, Comment
+from django.db.models import Q
 
 User = get_user_model()
 
@@ -125,7 +126,7 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
 
     def get_object(self):
-        return Comment.objects.get(pk=self.kwargs['comment_pk'])  # urlの因数として渡すときはcomment_pk
+        return Comment.objects.get(pk=self.kwargs['comment_pk'])
 
     def test_func(self):
         self.object = self.get_object()
@@ -133,3 +134,18 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
     def get_success_url(self):
         return reverse_lazy('comuse:detail', kwargs={'pk': self.kwargs['pk']})
+
+
+class SearchView(ListView):
+    template_name = "comuse/result.html"
+    model = Piece
+    
+    def get_queryset(self):
+        result = super(SearchView, self).get_queryset()
+        query = self.request.GET.get('q')
+
+        if query:
+            result = Piece.objects.filter(Q(title__icontains=query) | Q(caption__icontains=query))
+        
+        return result
+    

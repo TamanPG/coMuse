@@ -18,6 +18,12 @@
       coMuse
     </a>
     <ul class="top">
+      <li class="searchbar">
+        <form method="GET" action="{% url 'comuse:search' %}">
+          <input type="text" class="form-control" name="q" value="{{request.GET.q}}">
+          <button type="submit" value="search" class="blueback">検索</button>
+         </form>
+      </li>
       <li class="buttonCover">
         <a href="{% url 'registration:timeline' username=request.user.username %}">
           <button type="button" class="topbuttons whiteback">タイムライン</button>

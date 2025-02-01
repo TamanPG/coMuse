@@ -15,4 +15,5 @@ urlpatterns = [
     path('<int:pk>/deletebookmark/', views.DeleteBookmarkView.as_view(), name='deleteBookmark'),
     path('<int:pk>/comment/', views.CommentView.as_view(), name='comment'),
     path('<int:pk>/deletecomment/<int:comment_pk>', views.DeleteCommentView.as_view(), name='deleteComment'),
+    path('search/', views.SearchView.as_view(), name='search'),
 ]
