@@ -21,6 +21,8 @@
             {% csrf_token %}
         </form>
         {% endif %}
+    {% else %}
+    <p><a href="{% url 'registration:editun' username=user.username %}">ユーザー名変更</a></p>
     {% endif %}
     <p><a href="{% url 'registration:following_list' user.username %}">フォローしているアカウント:{{ following_num }}個</a></p>
     <p><a href="{% url 'registration:follower_list' user.username %}">フォローされているアカウント(フォロワー):{{ followers_num }}個</a></p>

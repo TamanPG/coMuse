@@ -5,9 +5,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseBadRequest
 from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, View
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, View, FormView
 
-from .forms import SignupForm
+import datetime
+
+from .forms import SignupForm, UserNameUpdateForm
 from .models import Friendship
 from comuse.models import Piece, Like, Bookmark
 
@@ -149,3 +151,29 @@ class TimelineView(LoginRequiredMixin, ListView):
         context["user_like_list"] = likes
         context["user_bookmark_list"] = bookmarks
         return context
+
+
+class UserNameUpdateView(LoginRequiredMixin, FormView):
+    template_name = 'registration/username_update_form.html'
+    form_class = UserNameUpdateForm
+    success_url = reverse_lazy('comuse:home')
+    
+    def form_valid(self, form):
+        user = self.request.user
+        deadline = user.username_updated_at + datetime.timedelta(days=60)
+        today = datetime.date.today()
+        if today >= deadline:
+            user.username = self.cleaned_data['username']
+            user.username_updated_at = datetime.date.today()
+            user.save()
+            return super().form_valid(form)
+        else:
+            messages.warning(self.request, "ユーザー名は60日に一回のみ変更できます。日をあけてから再度お試しください。")
+            return HttpResponseBadRequest(render(self.request, "400.html"))
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({
+            'username' : self.request.user.username,
+        })
+        return kwargs

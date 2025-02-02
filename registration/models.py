@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     email = models.EmailField()
+    username_updated_at = models.DateField(auto_now_add=True)
 
 
 class Friendship(models.Model):
