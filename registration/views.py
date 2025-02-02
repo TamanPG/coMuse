@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseBadRequest
-from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
+from django.shortcuts import HttpResponseRedirect, get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, View, FormView
 
@@ -154,18 +154,16 @@ class TimelineView(LoginRequiredMixin, ListView):
 
 
 class UserNameUpdateView(LoginRequiredMixin, FormView):
-    template_name = 'registration/username_update_form.html'
+    template_name = "registration/username_update_form.html"
     form_class = UserNameUpdateForm
-    success_url = reverse_lazy('comuse:home')
+    success_url = reverse_lazy("comuse:home")
     
-    def form_valid(self, form):
+    def form_valid(self, form): 
         user = self.request.user
         deadline = user.username_updated_at + datetime.timedelta(days=60)
         today = datetime.date.today()
         if today >= deadline:
-            user.username = self.cleaned_data['username']
-            user.username_updated_at = datetime.date.today()
-            user.save()
+            form.change(user=user)
             return super().form_valid(form)
         else:
             messages.warning(self.request, "ユーザー名は60日に一回のみ変更できます。日をあけてから再度お試しください。")

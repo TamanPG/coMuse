@@ -2,10 +2,12 @@ from django.conf import settings
 from django.contrib.auth import SESSION_KEY, get_user_model
 from django.test import TestCase
 from django.urls import reverse
+import datetime
 
 from comuse.models import Piece, Bookmark
 
 from .models import Friendship
+from .forms import UserNameUpdateForm
 
 User = get_user_model()
 
@@ -430,3 +432,85 @@ class TestTimelineView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "registration/timeline.html")
         self.assertQuerysetEqual(context["piece_list"], Piece.objects.select_related("user").prefetch_related("likes", "bookmarks").filter(user__in=followings).order_by('-created_at'))
+
+
+class TestUserNameUpdateView(TestCase):
+    def setUp(self):        
+        self.user = User.objects.create_user(
+            username="testuser",
+            email="test@example.com",
+            password="testpassword",
+        )
+        updated_at = datetime.date.today() - datetime.timedelta(days=61)
+        User.objects.filter(username=self.user.username).update(username_updated_at=updated_at)
+        self.url = reverse("registration:editun", kwargs={"username": self.user.username})
+
+    def test_success_get(self):
+        self.client.force_login(self.user)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "registration/username_update_form.html")
+
+    def test_success_post(self):
+        self.client.force_login(self.user)
+        valid_data = {
+            "username": "test",
+        }
+        response = self.client.post(self.url, valid_data, follow=True)
+
+        self.assertRedirects(
+            response,
+            reverse("comuse:home"),
+            status_code=302,
+            target_status_code=200,
+        )
+        self.assertIn(SESSION_KEY, self.client.session)
+
+    def test_failure_post_with_not_expired_date(self):
+        user = User.objects.create_user(
+            username="testuser2",
+            email="test2@example.com",
+            password="testpassword2",
+            username_updated_at=datetime.date.today(),
+        )
+        self.client.force_login(user)
+        url = reverse("registration:editun", kwargs={"username": user.username})
+        not_expired_data = {
+            "username": "test2",
+        }
+        response = self.client.post(url, not_expired_data, follow=True)
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(
+            User.objects.filter(username=not_expired_data["username"]).exists()
+        )
+
+    def test_failure_post_with_empty_newname(self):
+        self.client.force_login(self.user)
+        empty_name_data = {
+            "username": "",
+        }
+        response = self.client.post(self.url, empty_name_data)
+        form = UserNameUpdateForm(empty_name_data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(form.is_valid())
+        self.assertIn("このフィールドは必須です。", form.errors["username"])
+        self.assertFalse(
+            User.objects.filter(username="").exists()
+        )
+    
+    def test_failure_post_with_duplicated_user(self):
+        self.client.force_login(self.user)
+        duplicated_data = {
+            "username": "test",
+        }
+        User.objects.create_user(username="test", email="test3@test.com", password="testpassword3")
+        response = self.client.post(self.url, duplicated_data)
+        form = UserNameUpdateForm(duplicated_data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(
+            User.objects.filter(username=duplicated_data["username"]).count(), 1
+        )
+        self.assertIn("同じユーザー名が既に登録済みです。", form.errors["username"])
+        User.objects.last().delete()
