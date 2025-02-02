@@ -12,27 +12,15 @@
         <audio controls src="/media/{{ piece.uploadedFile }}"></audio>
     </figure>
 {% endif %}
-<p>{{ piece.caption }}</p>
+<p style="overflow-wrap: break-word;">{{ piece.caption }}</p>
 {% if piece.commentAllowance %}
-<button type="button" id="comment_button" class="blueback">コメント</button>
-<div id="comment_form_container" style="display: none;">
-    <form action="{% url 'comuse:comment' piece.pk %}" method="POST">
-        <div>
-            <span id="comment_form">{{ comment_form.content }}</span>
-            {% for error in field.errors %}
-                <p style="color: orange;">{{ error }}</p>
-            {% endfor %}
-            {% csrf_token %}
-        </div>
-        <button type="submit" class="blueback">投稿</button>
-    </form>
-</div>
+{% include 'comuse/comment_form.html' %}
 <div>
     <p>▼コメント一覧</p>
-    {% if piece.comments.all %}
-        {% for comment in piece.comments.all %}
-        <div>
-            <p>{{ comment.user }} :<br>  {{ comment.content | linebreaksbr }}
+    {% if comment_list %}
+        {% for comment in comment_list %}
+        <div style="overflow-wrap: break-word;">
+            <p>{{ comment.user }}({{comment.created_at}}) :<br>  {{ comment.content | linebreaksbr }}
             {% if comment.user == request.user %}
                 ...<a href="{% url 'comuse:deleteComment' piece.pk comment.id %}" style="font-size: 2rem;"><i class="bi bi-trash-fill"></i>コメントを削除</a>
             {% endif %}
@@ -40,7 +28,7 @@
         </div>
         {% endfor %}
     {% else %}
-        <p>ナイヨー</p>
+        <p>コメントはまだありません。</p>
     {% endif %}
 </div>
 {% else %}
@@ -49,7 +37,7 @@
 <p></p>
 {% if piece.user == request.user %}
 <a href="{% url 'comuse:delete' piece.pk %}" class="buttonCover">
-    <button type="button" class="blueback">投稿を削除</button>
+    <button type="button" class="redback">投稿を削除</button>
 </a>
 {% endif %}
 <a href="{% url 'comuse:home' %}" class="buttonCover">

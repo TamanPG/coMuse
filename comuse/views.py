@@ -39,7 +39,7 @@ class PieceCreateView(LoginRequiredMixin, CreateView):
 class PieceDetailView(LoginRequiredMixin, DetailView):
     template_name = "comuse/detail.html"
     model = Piece
-    queryset = model.objects.select_related("user").prefetch_related("likes", "bookmarks")
+    queryset = model.objects.select_related("user").prefetch_related("likes", "bookmarks", "comments")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -48,6 +48,7 @@ class PieceDetailView(LoginRequiredMixin, DetailView):
         context["is_bookmarked"] = self.object.bookmarks.filter(user=self.request.user, target_id=self.kwargs["pk"]).exists()
         context["bookmarked_count"] = self.object.bookmarks.filter(target_id=self.kwargs["pk"]).count()
         context["comment_form"] = CommentForm
+        context["comment_list"] = self.object.comments.filter(target=self.object).order_by("-created_at")
         return context
 
 
@@ -126,7 +127,8 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
 
     def get_object(self):
-        return Comment.objects.get(pk=self.kwargs['comment_pk'])
+        comment = get_object_or_404(Comment, pk=self.kwargs['comment_pk'])
+        return comment
 
     def test_func(self):
         self.object = self.get_object()

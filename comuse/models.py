@@ -57,8 +57,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields={"user", "created_at"}, name="comment_unique"),
-        ]

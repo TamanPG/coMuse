@@ -7,8 +7,8 @@
     {% csrf_token %}
     <p style="color: orange;">タイトル(必須): {{ form.title }}</label>50字まで</p>
     <p>楽曲ファイル(任意): {{ form.uploadedFile }}</label></p>
-    <p style="color: orange;">キャプション(必須): {{ form.caption }}</label>1000字まで</p>
-    <p>リプライの許可: {{ form.commentAllowance }}</label></p>
+    <p style="color: orange;">キャプション(必須): <span style="font-size: 2rem;">{{ form.caption }}</span></label>1000字まで</p>
+    <p>コメントの許可: {{ form.commentAllowance }}</label></p>
     {% for error in field.errors %}
         <p style="color: orange;">{{ error }}</p>
     {% endfor %}

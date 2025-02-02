@@ -137,6 +137,7 @@ button {
     height: max-content;
     border-left: solid 2px var(--accolor);
     border-right: solid 2px var(--accolor);
+    overflow-wrap: break-word;
 }
 
 .tweetbox .bottombar {
