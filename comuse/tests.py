@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.auth import SESSION_KEY, get_user_model
 from django.test import TestCase
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 
 from .models import Like, Piece, Bookmark, Comment
 
@@ -289,9 +289,9 @@ class TestSearchView(TestCase):
     def test_matches_both(self):
         response = self.client.get(self.url, {"q": "st"})
         context = response.context
-        results = Piece.objects.values_list('title', flat=True)
+        results = Piece.objects.values_list("title", flat=True)
         cont_list = list(context["piece_list"])
-        query_list = list(Piece.objects.select_related("user").prefetch_related("likes", "bookmarks").filter(title__in=results).order_by('-created_at'))
+        query_list = list(Piece.objects.select_related("user").prefetch_related("likes", "bookmarks").filter(title__in=results).order_by("-created_at"))
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "comuse/result.html")

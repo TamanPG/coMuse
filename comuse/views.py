@@ -115,19 +115,19 @@ class CommentView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        piece_pk = self.kwargs.get('pk')
+        piece_pk = self.kwargs.get("pk")
         piece = get_object_or_404(Piece, pk=piece_pk)
         comment = form.save(commit=False)
         comment.target = piece
         comment.save()
-        return redirect('comuse:detail', pk=piece_pk)
+        return redirect("comuse:detail", pk=piece_pk)
 
 
 class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
 
     def get_object(self):
-        comment = get_object_or_404(Comment, pk=self.kwargs['comment_pk'])
+        comment = get_object_or_404(Comment, pk=self.kwargs["comment_pk"])
         return comment
 
     def test_func(self):
@@ -135,7 +135,7 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.request.user == self.object.user
     
     def get_success_url(self):
-        return reverse_lazy('comuse:detail', kwargs={'pk': self.kwargs['pk']})
+        return reverse_lazy("comuse:detail", kwargs={"pk": self.kwargs["pk"]})
 
 
 class SearchView(ListView):
@@ -144,7 +144,7 @@ class SearchView(ListView):
     
     def get_queryset(self):
         result = super(SearchView, self).get_queryset()
-        query = self.request.GET.get('q')
+        query = self.request.GET.get("q")
 
         if query:
             result = Piece.objects.filter(Q(title__icontains=query) | Q(caption__icontains=query))

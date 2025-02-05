@@ -427,11 +427,11 @@ class TestTimelineView(TestCase):
     def test_success_get(self):
         response = self.client.get(self.url)
         context = response.context
-        followings = Friendship.objects.filter(follower=self.login_user).values_list('following', flat=True)
+        followings = Friendship.objects.filter(follower=self.login_user).values_list("following", flat=True)
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "registration/timeline.html")
-        self.assertQuerysetEqual(context["piece_list"], Piece.objects.select_related("user").prefetch_related("likes", "bookmarks").filter(user__in=followings).order_by('-created_at'))
+        self.assertQuerysetEqual(context["piece_list"], Piece.objects.select_related("user").prefetch_related("likes", "bookmarks").filter(user__in=followings).order_by("-created_at"))
 
 
 class TestUserNameUpdateView(TestCase):

@@ -15,15 +15,15 @@ class SignupForm(UserCreationForm):
 class UserNameUpdateForm(ModelForm):
     class Meta:
         model = User
-        fields = ['username',]
+        fields = ["username",]
 
     def __init__(self, *args, username=None, **kwargs):
-        kwargs.setdefault('label_suffix', '')
+        kwargs.setdefault("label_suffix", "")
         super().__init__(*args, **kwargs)
         if username:
-            self.fields['username'].widget.attrs['value'] = username
+            self.fields["username"].widget.attrs["value"] = username
 
     def change(self, user):
-            user.username = self.cleaned_data['username']
+            user.username = self.cleaned_data["username"]
             user.save()
             user.username_updated_at = date.today()

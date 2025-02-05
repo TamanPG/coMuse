@@ -141,8 +141,8 @@ class TimelineView(LoginRequiredMixin, ListView):
     model = Piece
 
     def get_queryset(self):
-        followings = Friendship.objects.filter(follower=self.request.user).values_list('following', flat=True)
-        return Piece.objects.select_related("user").prefetch_related("likes", "bookmarks").filter(user__in=followings).order_by('-created_at')
+        followings = Friendship.objects.filter(follower=self.request.user).values_list("following", flat=True)
+        return Piece.objects.select_related("user").prefetch_related("likes", "bookmarks").filter(user__in=followings).order_by("-created_at")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -172,6 +172,6 @@ class UserNameUpdateView(LoginRequiredMixin, FormView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs.update({
-            'username' : self.request.user.username,
+            "username" : self.request.user.username,
         })
         return kwargs
