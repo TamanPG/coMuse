@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h1>プロフィール</h1>
+{% for message in messages %}
+    <div>{{ message }}</div>
+{% endfor %}
+<h2>{{ user.username }}</h2>
+<div id="profmid">
+    {% if request.user != user %}
+        {% if is_following is True %}
+        <form action="{% url 'registration:unfollow' user.username %}" method="POST" style="width: 12%;">
+            <button type="submit" class="redback">フォロー解除</button>
+            {% csrf_token %}
+        </form>
+        {% else %}
+        <form action="{% url 'registration:follow' user.username %}" method="POST" style="width: 12%;">
+            <button type="submit" class="blueback">フォロー</button>
+            {% csrf_token %}
+        </form>
+        {% endif %}
+    {% else %}
+    <p><a href="{% url 'registration:editun' username=user.username %}">ユーザー名変更</a></p>
+    {% endif %}
+    <p><a href="{% url 'registration:following_list' user.username %}">フォローしているアカウント:{{ following_num }}個</a></p>
+    <p><a href="{% url 'registration:follower_list' user.username %}">フォローされているアカウント(フォロワー):{{ followers_num }}個</a></p>
+</div>
+{% for piece in piece_list %}
+<div class="tweetbox">
+    <ul class="topbar">
+        <li>
+            <a href="{% url 'registration:user_profile' username=piece.user %}">
+                投稿者:{{ piece.user }}
+            </a>
+        </li>
+        <li style="width: 30%; margin: 0% 1%;">
+            <p>投稿日:{{ piece.created_at }}</p>
+        </li>
+    </ul>
+    <h3 class="contents">タイトル:{{ piece.title }}</h3>
+    {% if piece.uploadedFile %}
+        <figure class="contents">
+            <figcaption>メディアを再生</figcaption>
+            <audio controls src="/media/{{ piece.uploadedFile }}"></audio>
+        </figure>
+    {% endif %}
+    <p class="contents">{{ piece.caption | linebreaksbr }}</p>
+    <ul class="bottombar">
+        <li>
+            <a href="{% url 'comuse:detail' piece.pk %}">
+                <i class="bi bi-eye-fill"></i>詳細
+            </a>
+        </li>
+        {% if request.user == piece.user %}
+            <li>
+                <a href="{% url 'comuse:delete' piece.pk %}">
+                    <i class="bi bi-trash-fill"></i>削除
+                </a>
+            </li>
+        {% endif %}
+        {% include 'comuse/like.html' %}
+        {% include 'comuse/bookmark.html' %}
+    </ul>
+</div>
+{% endfor %}
+<a href="{% url 'comuse:home' %}">
+    <div class="buttonCover"><button class="blueback">ホームへ</button></div>
+</a>
+{% if request.user == user %}
+    <a href="{% url 'registration:signout' user.username %}" class="buttonCover">
+        <button class="redback">アカウント削除</button>
+    </a>
+{% endif %}
+{% endblock %}

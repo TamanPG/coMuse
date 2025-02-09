@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Bookmarks{% endblock %}
+
+{% block content %}
+<h1>ブックマーク</h1>
+{% if bookmarked_piece_list %}
+    {% for piece in bookmarked_piece_list %}
+    <div class="tweetbox">
+        <ul class="topbar">
+            <li>
+                <a href="{% url 'registration:user_profile' username=piece.user %}">
+                    投稿者:{{ piece.user }}
+                </a>
+            </li>
+            <li style="width: 30%; margin: 0% 1%;">
+                <p>投稿日:{{ piece.created_at }}</p>
+            </li>
+        </ul>
+        <h3 class="contents">タイトル:{{ piece.title }}</h3>
+        {% if piece.uploadedFile %}
+            <figure class="contents">
+                <figcaption>メディアを再生</figcaption>
+                <audio controls src="/media/{{ piece.uploadedFile }}"></audio>
+            </figure>
+        {% endif %}
+        <p class="contents">{{ piece.caption | linebreaksbr }}</p>
+        <ul class="bottombar">
+            <li>
+                <a href="{% url 'comuse:detail' piece.pk %}" alt="ブックマークを解除">
+                    <i class="bi bi-eye-fill"></i>詳細
+                </a>
+            </li>
+            {% if request.user == piece.user %}
+                <li>
+                    <a href="{% url 'comuse:delete' piece.pk %}">
+                        <i class="bi bi-trash-fill"></i>削除
+                    </a>
+                </li>
+            {% endif %}
+            {% include 'comuse/like.html' %}
+            {% include 'comuse/bookmark.html' %}
+        </ul>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>ブックマークはまだ登録されていません。</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,16 @@
+<div class="minibuttons" style="width: 20%;">
+    {% if is_bookmarked or piece.id in user_bookmark_list %}
+        <button id="piece-{{piece.id}}" class="bmbtn" data-url="{% url 'comuse:deleteBookmark' piece.id %}" data-pk={{piece.pk}}
+            data-is-bookmarked="true">
+            <i class="bi bi-bookmark-fill"></i>
+        </button>
+        <span id="bmtxt_{{piece.id}}">ブックマーク解除</span>
+    {% else %}
+        <button id="piece-{{piece.id}}" class="bmbtn" data-url="{% url 'comuse:bookmark' piece.id %}" data-pk={{piece.pk}}
+            data-is-bookmarked="false">
+            <i class="bi bi-bookmark"></i>
+        </button>
+        <span id="bmtxt_{{piece.id}}">ブックマーク</span>
+    {% endif %}
+</div>
+

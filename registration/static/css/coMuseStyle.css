@@ -1,0 +1,229 @@
+:root {
+    --bgcolor: #ddd;
+    --txcolor: #000;
+    --accolor: saddlebrown;
+    --subaccolor: wheat;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+      --bgcolor: #000;
+      --txcolor: #ddd;
+      --accolor: orange;
+      --subaccolor: rgb(60, 54, 44);
+    }
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    color: var(--txcolor);
+    background-color: var(--bgcolor);
+    transition: .5s;
+}
+
+header {
+    margin: 2%;
+    display: flex;
+    height: fit-content;
+}
+
+p, li {
+    font-size: 2rem;
+}
+
+.errorlist {
+    color: orange;
+}
+
+h1 {
+    font-size: 3.6rem;
+}
+
+h2 {
+    font-size: 3rem;
+}
+
+h3 {
+    font-size: 2.4rem;
+}
+
+a {
+    color: fuchsia;
+}
+
+#logo {
+    width: 30%;
+    margin: 1%;
+    padding: 1%;
+    font-size: 3.2rem;
+    color: var(--accolor);
+}
+
+button {
+    font-size: 2rem;
+    padding: 1%;
+    margin: 2%;
+    border-radius: 4px;
+    min-width: 12%;
+    height: fit-content;
+}
+
+.buttonCover {
+    min-width: 20%;
+}
+
+.top {
+    width: 70%;
+    height: 20%;
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+    margin: 1%;
+    padding: 1%;
+    text-align: right;
+}
+
+.topbuttons {
+    min-width: 80%;
+}
+
+.blueback {
+    background: var(--accolor);
+    border: 2px solid var(--accolor);
+    color: var(--bgcolor);
+}
+
+.whiteback {
+    background: var(--bgcolor);
+    border: 2px solid var(--accolor);
+    color: var(--txcolor);
+}
+
+.redback {
+    background: rgb(255, 0, 0);
+    border: 2px solid red;
+    color: #ddd;
+}
+
+.tweetbox {
+    margin: 2% 0;
+    background: var(--bgcolor);
+}
+
+.tweetbox p {
+    height: min-content;
+    margin: 0;
+    padding: 0 4%;
+}
+
+.tweetbox .topbar {
+    margin: 0;
+    display: flex;
+    list-style: none;
+    font-size: 2rem;
+    align-items: center;
+    padding: 1%;
+    background: var(--subaccolor);
+    color: var(--txcolor);
+    border: solid 2px var(--accolor);
+    border-radius: 8px 8px 0 0;
+}
+
+.tweetbox .contents {
+    padding: 1% 2%;
+    margin: 0;
+    height: max-content;
+    border-left: solid 2px var(--accolor);
+    border-right: solid 2px var(--accolor);
+    overflow-wrap: break-word;
+}
+
+.tweetbox .bottombar {
+    margin: 0;
+    display: flex;
+    list-style: none;
+    font-size: 2rem;
+    align-items: center;
+    padding: 1%;
+    background: var(--subaccolor);
+    border: solid 2px var(--accolor);
+    border-radius: 0 0 8px 8px;
+}
+
+.bottombar li {
+    min-width: 10%;
+}
+
+.tweetbox .bi {
+    padding: 0 4% 0 0;
+}
+
+.bi.bi-trash-fill {
+    color: red;
+}
+
+#profmid {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+#profmid p {
+    margin: 4%;
+}
+
+.minibuttons {
+    float: left;
+    margin: 1%;
+    display: inline-flex;
+}
+
+.minibuttons span {
+    padding: 1%;
+    margin: 1%;
+}
+
+.likebtn, .bmbtn {
+    border: none;
+    padding: 1%;
+    margin: 1%;
+    width: fit-content;
+    background-color: transparent;
+}
+
+.bi.bi-heart {
+    color: magenta;
+}
+
+.bi.bi-heart-fill {
+    color: magenta;
+}
+
+.bi.bi-bookmark {
+    color: green;
+}
+
+.bi.bi-bookmark-fill {
+    color: green;
+}
+
+.welcomeText {
+    display: inline-block;
+    padding: 4% 8%;
+}
+.welcomeTitle {
+    text-align: center;
+    padding: 16%;
+    background-position: top;
+    background-image: url(../img/welcomeBG.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#comment_form textarea {
+    width: 60%;
+    font-size: 2rem;
+}

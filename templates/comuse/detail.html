@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}投稿詳細{% endblock %}
+
+{% block content %}
+<h2>タイトル:{{ piece.title }}</h2>
+<p>投稿者:{{ piece.user }}</p>
+<p>投稿日:{{ piece.created_at }}</p>
+{% if piece.uploadedFile %}
+    <figure class="contents">
+        <figcaption>メディアを再生</figcaption>
+        <audio controls src="/media/{{ piece.uploadedFile }}"></audio>
+    </figure>
+{% endif %}
+<p style="overflow-wrap: break-word;">{{ piece.caption }}</p>
+{% if piece.commentAllowance %}
+{% include 'comuse/comment_form.html' %}
+<div>
+    <p>▼コメント一覧</p>
+    {% if comment_list %}
+        {% for comment in comment_list %}
+        <div style="overflow-wrap: break-word;">
+            <p>{{ comment.user }}({{comment.created_at}}) :<br>  {{ comment.content | linebreaksbr }}
+            {% if comment.user == request.user %}
+                ...<a href="{% url 'comuse:deleteComment' piece.pk comment.id %}" style="font-size: 2rem;"><i class="bi bi-trash-fill"></i>コメントを削除</a>
+            {% endif %}
+            </p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>コメントはまだありません。</p>
+    {% endif %}
+</div>
+{% else %}
+<p>作者はコメントを許可していません</p>
+{% endif %}
+<p></p>
+{% if piece.user == request.user %}
+<a href="{% url 'comuse:delete' piece.pk %}" class="buttonCover">
+    <button type="button" class="redback">投稿を削除</button>
+</a>
+{% endif %}
+<a href="{% url 'comuse:home' %}" class="buttonCover">
+    <button type="button" class="whiteback">ホームへ</button>
+</a>
+
+{% endblock %}

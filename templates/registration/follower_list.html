@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Followers{% endblock %}
+
+{% block content %}
+<h1>フォロワー一覧</h1>
+{% if follower_list %}
+{% for follower in follower_list %}
+<div>
+    <a href="{% url 'registration:user_profile' username=follower.follower.username %}" style="font-size: 2rem;">
+        {{ follower.follower }}
+    </a>
+</div>
+{% endfor %}
+{% else %}
+<p>フォロワーはいません。</p>
+{% endif %}
+<a href="{{request.META.HTTP_REFERER}}" class="buttonCover">
+    <button class="blueback">   
+        前のページに戻る  
+    </button>
+</a>
+{% endblock %}

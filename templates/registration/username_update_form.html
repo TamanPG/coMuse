@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}ユーザー名変更{% endblock %}
+
+{% block content %}
+<h1>ユーザー名変更</h1>
+<form method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <div class="buttonCover"><button type="submit" class="blueback">変更</button></div>
+</form>
+<p>※ユーザー名は60日に1回のみ変更できます。</p>
+{% endblock %}

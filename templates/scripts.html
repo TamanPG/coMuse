@@ -1,0 +1,54 @@
+<script>
+    for (const LikeBtn of document.getElementsByClassName('likebtn')) {
+
+        LikeBtn.addEventListener('click',
+            async () => {
+                const isLiked = LikeBtn.dataset.isLiked === 'true'
+                const response = await fetch(
+                    `/comuse/${LikeBtn.dataset.pk}/${isLiked ? 'unlike' : 'like'}/`,
+                    { method: 'POST', headers: { 'X-CSRFToken': '{{ csrf_token }}' } },
+                )
+                const data = await response.json()
+                LikeBtn.innerHTML = isLiked ? '<i class="bi bi-heart"></i>' : '<i class="bi bi-heart-fill"></i>'
+                LikeBtn.dataset.isLiked = isLiked ? 'false' : 'true'
+                const likeText = document.querySelector("#liketxt_" + LikeBtn.dataset.pk)
+                likeText.innerHTML = isLiked ? 'いいね！' : 'いいね解除';
+                const LikeDisplay = document.querySelector("#count_" + LikeBtn.dataset.pk)
+                LikeDisplay.innerHTML = String(data.liked_count)
+            }
+        )
+    }
+
+    for (const BookmarkBtn of document.getElementsByClassName('bmbtn')) {
+
+        BookmarkBtn.addEventListener('click',
+            async () => {
+                const isBookmarked = BookmarkBtn.dataset.isBookmarked === 'true'
+                const response = await fetch(
+                    `/comuse/${BookmarkBtn.dataset.pk}/${isBookmarked ? 'deletebookmark' : 'bookmark'}/`,
+                    { method: 'POST', headers: { 'X-CSRFToken': '{{ csrf_token }}' } },
+                )
+                const data = await response.json()
+                BookmarkBtn.innerHTML = isBookmarked ? '<i class="bi bi-bookmark"></i>' : '<i class="bi bi-bookmark-fill"></i>'
+                BookmarkBtn.dataset.isBookmarked = isBookmarked ? 'false' : 'true'
+                const bmText = document.querySelector("#bmtxt_" + BookmarkBtn.dataset.pk)
+                bmText.innerHTML = isBookmarked ? 'ブックマーク' : 'ブックマーク解除';
+            }
+        )
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        let commentButton = document.getElementById("comment_button");
+        let commentFormContainer = document.getElementById("comment_form_container");
+
+        commentButton.addEventListener("click", function () {
+            if (commentFormContainer.style.display === "none" || commentFormContainer.style.display === "") {
+                commentFormContainer.style.display = "block";
+                commentButton.textContent = "非表示";
+            } else {
+                commentFormContainer.style.display = "none";
+                commentButton.textContent = "投稿";
+            }
+        });
+    });
+</script>

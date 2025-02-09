@@ -1,3 +1,19 @@
+from django.conf import settings
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
+
+class User(AbstractUser):
+    email = models.EmailField()
+    username_updated_at = models.DateField(auto_now_add=True)
+
+
+class Friendship(models.Model):
+    following = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="follower")
+    follower = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="following")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["following", "follower"], name="follow_unique"),
+        ]
