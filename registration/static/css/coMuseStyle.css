@@ -1,15 +1,17 @@
 :root {
-    --bgcolor: #ddd;
+    --bgcolor: #fff;
     --txcolor: #000;
     --accolor: saddlebrown;
-    --subaccolor: wheat;
+    --subaccolor: rgb(254, 248, 240);
+    --licolor: rgb(156, 0, 188);
 }
 @media (prefers-color-scheme: dark) {
     :root {
       --bgcolor: #000;
-      --txcolor: #ddd;
+      --txcolor: #fff;
       --accolor: orange;
       --subaccolor: rgb(60, 54, 44);
+      --licolor: fuchsia;
     }
 }
 
@@ -34,7 +36,12 @@ p, li {
 }
 
 .errorlist {
-    color: orange;
+    color: var(--accolor);
+}
+
+.necessary {
+    color: var(--accolor);
+    font-weight: bold;
 }
 
 h1 {
@@ -50,7 +57,7 @@ h3 {
 }
 
 a {
-    color: fuchsia;
+    color: var(--licolor);
 }
 
 #logo {
@@ -89,7 +96,7 @@ button {
     min-width: 80%;
 }
 
-.blueback {
+.colored {
     background: var(--accolor);
     border: 2px solid var(--accolor);
     color: var(--bgcolor);
@@ -103,8 +110,8 @@ button {
 
 .redback {
     background: rgb(255, 0, 0);
-    border: 2px solid red;
-    color: #ddd;
+    border: 2px solid var(--txcolor);
+    color: #fff;
 }
 
 .tweetbox {
@@ -210,11 +217,13 @@ button {
     color: green;
 }
 
-.welcomeText {
+#welcomeText {
     display: inline-block;
     padding: 4% 8%;
+    -webkit-text-stroke: 1px black;
 }
 .welcomeTitle {
+    color: orange;
     text-align: center;
     padding: 16%;
     background-position: top;

@@ -21,7 +21,7 @@
       <li class="searchbar">
         <form method="GET" action="{% url 'comuse:search' %}">
           <input type="text" class="form-control" name="q" value="{{request.GET.q}}">
-          <button type="submit" value="search" class="blueback">検索</button>
+          <button type="submit" value="search" class="colored">検索</button>
          </form>
       </li>
       <li class="buttonCover">
@@ -36,7 +36,7 @@
       </li>
       <li class="buttonCover">
         <a href="{% url 'comuse:create' %}">
-          <button type="button" class="topbuttons blueback">投稿</button>
+          <button type="button" class="topbuttons colored">投稿</button>
         </a>
       </li>
       <li class="buttonCover">
@@ -47,7 +47,7 @@
       </li>
       <li class="buttonCover">
         <a href="{% url 'registration:user_profile' username=request.user.username %}" id="usericon">
-          <button type="button" class="topbuttons blueback">プロフィール</button>
+          <button type="button" class="topbuttons colored">プロフィール</button>
         </a>
       </li>
     </ul>
@@ -61,7 +61,7 @@
       </li>
       <li class="buttonCover">
         <a href="{% url 'registration:signup' %}">
-          <button type="button" class="topbuttons blueback">登録</button>
+          <button type="button" class="topbuttons colored">登録</button>
         </a>
       </li>
     </ul>
