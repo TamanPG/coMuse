@@ -1,13 +1,13 @@
-<button type="button" id="comment_button" class="blueback">コメント</button>
+<button type="button" id="comment_button" class="colored">コメント</button>
 <div id="comment_form_container" style="display: none;">
     <form action="{% url 'comuse:comment' piece.pk %}" method="POST">
         <div>
             <span id="comment_form">{{ comment_form.content }}</span>
             {% for error in field.errors %}
-                <p style="color: orange;">{{ error }}</p>
+                <p class="errorlist">{{ error }}</p>
             {% endfor %}
             {% csrf_token %}
         </div>
-        <button type="submit" class="blueback">投稿</button>
+        <button type="submit" class="colored">投稿</button>
     </form>
 </div>

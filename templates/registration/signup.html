@@ -1,9 +1,5 @@
 {% extends "base.html" %}
 
-{%load static %}
-
-<link rel="stylesheet" href="{% static 'css/twitterclone.css' %}">
-
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
@@ -11,6 +7,6 @@
 <form method="post">
     {{ form.as_p }}
     {% csrf_token %}
-    <div class="buttonCover"><button type="submit" class="blueback">登録</button></div>
+    <div class="buttonCover"><button type="submit" class="colored">登録</button></div>
 </form>
 {% endblock %}
